@@ -1161,6 +1161,14 @@ config ROCKCHIP_BOOTDEV_SIMPLIFIED
 	  This reduces boot time and complexity for systems that
 	  don't need the full Rockchip BSP initialization.
 
+config ROCKCHIP_CLK_DUMP
+	bool "Rockchip clock dump support"
+	default n
+	help
+	  Enable clock dump support for debugging. When enabled, soc_clk_dump()
+	  function will print clock information during boot. This is useful for
+	  clock debugging but may increase boot time and console output.
+
 config ROCKCHIP_CMD
 	string "Rockchip specific command"
 	default ""

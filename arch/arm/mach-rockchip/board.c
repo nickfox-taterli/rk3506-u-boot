@@ -414,42 +414,7 @@ static void env_fixup(void)
 
 static void cmdline_handle(void)
 {
-	struct blk_desc *dev_desc;
-	int if_type;
-	int devnum;
-
-	param_parse_pubkey_fuse_programmed();
-
-	dev_desc = rockchip_get_bootdev();
-	if (!dev_desc)
-		return;
-
-	/*
-	 * 1. From rk356x, the sd/udisk recovery update flag was moved from
-	 *    IDB to Android BCB.
-	 *
-	 * 2. Udisk is init at the late boot_from_udisk(), but
-	 *    rockchip_get_boot_mode() actually only read once,
-	 *    we need to update boot mode according to udisk BCB.
-	 */
-	if_type = dev_desc->if_type;
-	devnum = dev_desc->devnum;
-	if ((if_type == IF_TYPE_MMC && devnum == 1) || (if_type == IF_TYPE_USB)) {
-		if (get_bcb_recovery_msg() == BCB_MSG_RECOVERY_RK_FWUPDATE) {
-			if (if_type == IF_TYPE_MMC && devnum == 1) {
-				env_update("bootargs", "sdfwupdate");
-			} else if (if_type == IF_TYPE_USB) {
-				env_update("bootargs", "usbfwupdate");
-				env_set("reboot_mode", "recovery-usb");
-			}
-		} else {
-			if (if_type == IF_TYPE_USB)
-				env_set("reboot_mode", "normal");
-		}
-	}
-
-	if (rockchip_get_boot_mode() == BOOT_MODE_QUIESCENT)
-		env_update("bootargs", "androidboot.quiescent=1 pwm_bl.quiescent=1");
+	return;
 }
 
 static void scan_run_cmd(void)
@@ -514,7 +479,9 @@ int board_late_init(void)
 	setup_boot_mode();
 #endif
 	env_fixup();
+#ifdef CONFIG_ROCKCHIP_CLK_DUMP
 	soc_clk_dump();
+#endif
 	cmdline_handle();
 #ifdef CONFIG_AMP
 	amp_cpus_on();
@@ -562,7 +529,7 @@ int board_init(void)
 	smp_event1(SEVT_0, 0);
 
 	board_debug_init();
-#ifdef DEBUG
+#ifdef CONFIG_ROCKCHIP_CLK_DUMP
 	soc_clk_dump();
 #endif
 #ifdef CONFIG_OPTEE_CLIENT
@@ -1020,13 +987,13 @@ int bootm_board_start(void)
 	/* disable bootm relcation to save boot time */
 	bootm_no_reloc();
 
-	/* PCBA test needs more permission */
-	if (get_bcb_recovery_msg() == BCB_MSG_RECOVERY_PCBA)
-		env_update("bootargs", "androidboot.selinux=permissive");
+	// /* PCBA test needs more permission */
+	// if (get_bcb_recovery_msg() == BCB_MSG_RECOVERY_PCBA)
+	// 	env_update("bootargs", "androidboot.selinux=permissive");
 
-	/* sysmem */
-	hotkey_run(HK_SYSMEM);
-	sysmem_overflow_check();
+	// /* sysmem */
+	// hotkey_run(HK_SYSMEM);
+	// sysmem_overflow_check();
 
 	return 0;
 }

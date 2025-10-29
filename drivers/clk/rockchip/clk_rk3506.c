@@ -97,6 +97,7 @@ static struct rockchip_cpu_rate_table rk3506_cpu_rates[] = {
 	.name = _name,				\
 }
 
+#ifdef CONFIG_ROCKCHIP_CLK_DUMP
 static const struct rk3506_clk_info clks_dump[] = {
 	RK3506_CLK_DUMP(PLL_GPLL, "gpll"),
 	RK3506_CLK_DUMP(PLL_V0PLL, "v0pll"),
@@ -180,6 +181,7 @@ int soc_clk_dump(void)
 
 	return 0;
 }
+#endif
 #endif
 
 static int rk3506_armclk_get_rate(struct rk3506_clk_priv *priv)
