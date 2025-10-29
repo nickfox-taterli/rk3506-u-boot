@@ -11,7 +11,7 @@
 
 	chosen: chosen {
 		stdout-path = &uart0;
-		u-boot,spl-boot-order = &mmc, &spi_nand, &spi_nor;
+		u-boot,spl-boot-order = &mmc, &spi_nand;
 	};
 
 	secure-otp@ff520000 {
@@ -123,16 +123,14 @@
 		spi-tx-bus-width = <1>;
 		spi-rx-bus-width = <4>;
 		spi-max-frequency = <80000000>;
-	};
+		partitions {
+            compatible = "fixed-partitions";
+            #address-cells = <1>;
+            #size-cells = <1>;
 
-	spi_nor: flash@1 {
-		u-boot,dm-spl;
-		compatible = "jedec,spi-nor";
-		label = "sfc_nor";
-		reg = <0>;
-		spi-tx-bus-width = <1>;
-		spi-rx-bus-width = <4>;
-		spi-max-frequency = <80000000>;
+            uboot@00400000  { label = "uboot";  reg = <0x00400000 0x00400000>; }; /* 4MiB */
+            rootfs@00800000 { label = "rootfs"; reg = <0x00800000 0x0F800000>; }; /* 剩余全给 */
+        };
 	};
 };
 

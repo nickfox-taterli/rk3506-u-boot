@@ -1268,6 +1268,7 @@ int board_rng_seed(struct abuf *buf)
 /*
  * Pass fwver when any available.
  */
+#ifndef CONFIG_ROCKCHIP_DISABLE_FDT_CHOSEN_BOOTARGS
 static void bootargs_add_fwver(bool verbose)
 {
 #ifdef CONFIG_ROCKCHIP_PRELOADER_ATAGS
@@ -1490,6 +1491,7 @@ char *board_fdt_chosen_bootargs(void *fdt)
 
 	return (char *)bootargs;
 }
+#endif /* CONFIG_ROCKCHIP_DISABLE_FDT_CHOSEN_BOOTARGS */
 
 int ft_verify_fdt(void *fdt)
 {
@@ -1568,4 +1570,3 @@ int ft_verify_fdt(void *fdt)
 #endif
 	return 1;
 }
-

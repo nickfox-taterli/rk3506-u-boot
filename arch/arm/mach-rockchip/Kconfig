@@ -1141,6 +1141,15 @@ config ROCKCHIP_HOTKEY
 	help
 	  Define a lot of hotkeys for debug.
 
+config ROCKCHIP_RKIMG_DET_BOOTDEV
+	bool "Include RKIMG_DET_BOOTDEV environment variable"
+	default y
+	help
+	  This option controls whether to include the RKIMG_DET_BOOTDEV
+	  environment variable definition which is used for detecting
+	  Rockchip boot devices. When disabled, the boot device detection
+	  script will not be included in the environment.
+
 config ROCKCHIP_CMD
 	string "Rockchip specific command"
 	default ""
@@ -1182,6 +1191,13 @@ config ROCKCHIP_SET_SN
 config ROCKCHIP_SET_ETHADDR
 	bool "Rockchip set eth address"
 	default y
+
+config ROCKCHIP_DISABLE_FDT_CHOSEN_BOOTARGS
+	bool "Disable board_fdt_chosen_bootargs function"
+	default n
+	help
+	  When enabled, Rockchip board_fdt_chosen_bootargs() function will not be
+	  compiled.
 
 config BASE_DEFCONFIG
 	string "Base defconfig of config fragment"
