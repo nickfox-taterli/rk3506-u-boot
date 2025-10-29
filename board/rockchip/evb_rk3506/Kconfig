@@ -12,4 +12,12 @@ config SYS_CONFIG_NAME
 config BOARD_SPECIFIC_OPTIONS # dummy
 	def_bool y
 
+config UART0_AS_SWD_INTERFACE
+	bool "Enable UART0 as SWD interface"
+	help
+	  Enable UART0 pins to function as SWD (Serial Wire Debug) interface.
+	  This will configure GPIO0_C6/C7 as JTAG_TCK_M1/JTAG_TMS_M1 and
+	  set up the necessary register configurations for SWD functionality.
+	  When enabled, UART0 will not be available for normal UART communication.
+
 endif
