@@ -52,6 +52,7 @@ __weak int rk_board_scan_bootdev(void)
 	return run_command_list(devtype_num_set, -1, 0);
 }
 
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_SIMPLIFIED
 static int bootdev_init(const char *devtype, const char *devnum)
 {
 #ifdef CONFIG_MMC
@@ -238,16 +239,19 @@ static int get_bootdev_type(void)
 
 	return type;
 }
+#endif
 
 static struct blk_desc *dev_desc;
 
 struct blk_desc *rockchip_get_bootdev(void)
 {
-	int dev_type;
-	int devnum;
-
 	if (dev_desc)
 		return dev_desc;
+
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_SIMPLIFIED
+	/* Full Rockchip BSP initialization flow */
+	int dev_type;
+	int devnum;
 
 	boot_devtype_init();
 	dev_type = get_bootdev_type();
@@ -274,6 +278,7 @@ struct blk_desc *rockchip_get_bootdev(void)
 #endif
 
 	printf("PartType: %s\n", part_get_type(dev_desc));
+#endif /* CONFIG_ROCKCHIP_BOOTDEV_SIMPLIFIED */
 
 #ifdef CONFIG_MTD_BLK
 	mtd_blk_map_partitions(dev_desc);
@@ -330,7 +335,9 @@ void setup_download_mode(void)
 {
 	int vbus = 1; /* Assumed 1 in case of no rockusb */
 
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_SIMPLIFIED
 	boot_devtype_init();
+#endif
 
 	if (rockchip_dnl_key_pressed() || is_hotkey(HK_ROCKUSB_DNL)) {
 		printf("download %skey pressed... ",

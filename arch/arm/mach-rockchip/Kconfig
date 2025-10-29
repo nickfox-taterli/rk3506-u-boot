@@ -1150,6 +1150,17 @@ config ROCKCHIP_RKIMG_DET_BOOTDEV
 	  Rockchip boot devices. When disabled, the boot device detection
 	  script will not be included in the environment.
 
+config ROCKCHIP_BOOTDEV_SIMPLIFIED
+	bool "Enable simplified Rockchip bootdev initialization"
+	default n
+	help
+	  Enable simplified Rockchip bootdev initialization flow.
+	  When enabled, this option skips the full boot device detection
+	  and initialization process, providing a minimal bootdev
+	  setup that only includes essential MTD partition mapping.
+	  This reduces boot time and complexity for systems that
+	  don't need the full Rockchip BSP initialization.
+
 config ROCKCHIP_CMD
 	string "Rockchip specific command"
 	default ""
