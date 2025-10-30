@@ -1160,6 +1160,12 @@ config ROCKCHIP_BOOTDEV_SIMPLIFIED
 	  This reduces boot time and complexity for systems that
 	  don't need the full Rockchip BSP initialization.
 
+config ROCKCHIP_BOOTDEV_QUITE
+	bool "Mute Rockchip bootdev log"
+	default n
+	help
+	  Mute Rockchip bootdev log
+
 config ROCKCHIP_CLK_DUMP
 	bool "Rockchip clock dump support"
 	default n
