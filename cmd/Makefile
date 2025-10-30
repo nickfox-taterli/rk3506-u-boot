@@ -85,7 +85,7 @@ obj-$(CONFIG_CMD_CRAMFS) += cramfs.o
 obj-$(CONFIG_LED_STATUS_CMD) += legacy_led.o
 obj-$(CONFIG_CMD_LED) += led.o
 obj-$(CONFIG_CMD_LICENSE) += license.o
-obj-y += load.o download.o
+obj-y += load.o
 obj-$(CONFIG_CMD_LOAD_ANDROID) += load_android.o android_cmds.o
 obj-$(CONFIG_CMD_LOG) += log.o
 obj-$(CONFIG_ID_EEPROM) += mac.o
@@ -176,7 +176,7 @@ obj-$(CONFIG_CMD_DVFS) += dvfs.o
 
 obj-$(CONFIG_CMD_BLOB) += blob.o
 
-obj-$(CONFIG_ARCH_ROCKCHIP) += rkimgtest.o
+# obj-$(CONFIG_ARCH_ROCKCHIP) += rkimgtest.o
 obj-$(CONFIG_CMD_ATAGS) += atags.o
 
 endif # !CONFIG_SPL_BUILD
