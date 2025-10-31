@@ -39,22 +39,6 @@
 #define IOMUX_NIBBLE_MASK(n)  (0xFU << (n))
 #define IOMUX_VAL(n, v)       ((unsigned)((v) & 0xF) << (n))
 
-/* 简单的轮询式 putc,用于 very-early 打印自检 */
-static inline void early_uart0_putc(char c)
-{
-    /* 等待 THR 空 */
-    while (!(readl(UART0_BASE + UART_LSR) & LSR_THRE)) { }
-    writel((unsigned)c, UART0_BASE + UART_THR);
-}
-
-static inline void early_uart0_puts(const char *s)
-{
-    while (*s) {
-        if (*s == '\n') early_uart0_putc('\r');
-        early_uart0_putc(*s++);
-    }
-}
-
 int board_early_init_f(void)
 {
 #if CONFIG_UART0_AS_SWD_INTERFACE
