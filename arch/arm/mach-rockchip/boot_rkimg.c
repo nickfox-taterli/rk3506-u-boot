@@ -88,7 +88,7 @@ static int bootdev_init(const char *devtype, const char *devnum)
 static void boot_devtype_init(void)
 {
 	char *devtype = NULL, *devnum = NULL;
-#ifdef CONFIG_ROCKCHIP_BOOTDEV_QUITE
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_QUITE
 	char *src = "scan";
 #endif
 	static int done;	/* static */
@@ -104,7 +104,7 @@ static void boot_devtype_init(void)
 	/* configuration */
 	if (!param_parse_assign_bootdev(&devtype, &devnum)) {
 		if (!bootdev_init(devtype, devnum)) {
-#ifdef CONFIG_ROCKCHIP_BOOTDEV_QUITE
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_QUITE
 			src = "assign";
 #endif
 			goto finish;
@@ -115,7 +115,7 @@ static void boot_devtype_init(void)
 #ifdef CONFIG_ROCKCHIP_PRELOADER_ATAGS
 	if (!param_parse_atags_bootdev(&devtype, &devnum)) {
 		if (!bootdev_init(devtype, devnum)) {
-#ifdef CONFIG_ROCKCHIP_BOOTDEV_QUITE
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_QUITE
 			src = "atags";
 #endif
 			goto finish;
@@ -132,14 +132,14 @@ static void boot_devtype_init(void)
 		/* Set default if all failed */
 		devtype = "mmc";
 		devnum = "0";
-#ifdef CONFIG_ROCKCHIP_BOOTDEV_QUITE
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_QUITE
 		env_set("devtype", devtype);
 		env_set("devnum", devnum);
 #endif
 	}
 finish:
 	done = 1;
-#ifdef CONFIG_ROCKCHIP_BOOTDEV_QUITE
+#ifndef CONFIG_ROCKCHIP_BOOTDEV_QUITE
 	printf("Bootdev(%s): %s %s\n", src,
 	       env_get("devtype"), env_get("devnum"));
 #endif

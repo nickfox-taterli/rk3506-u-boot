@@ -41,9 +41,9 @@
 		"ubi part rootfs 2048; " \
 		"ubifsmount ubi0:rootfs; " \
 		"ubifsload ${kernel_addr_r} /boot/zImage; " \
-		"ubifsload ${fdt_addr_r} /boot/rk3506b-evb1-v10.dtb; " \
+		"ubifsload ${fdt_addr_r} /boot/rk3506g-taterli.dtb; " \
 		"bootz ${kernel_addr_r} - ${fdt_addr_r}\0" \
-	"bootargs=ubi.mtd=0 root=ubi0:rootfs rootfstype=ubifs rw mtdparts=spi2.0:4M@4M(uboot),-(rootfs)\0" \
+	"bootargs=console=ttyS0,1500000n8 ubi.mtd=ubi root=ubi0:rootfs rootfstype=ubifs rw\0" \
 	"mtdids=spi-nand0=spi-nand0\0" \
 	"mtdparts=mtdparts=spi-nand0:" \
 		"0x00400000@0x00400000(uboot)," \

@@ -24,7 +24,7 @@ int __weak show_board_info(void)
 	model = fdt_getprop(gd->fdt_blob, 0, "model", NULL);
 
 	if (model)
-		printf("1Model: %s\n", model);
+		printf("Model: %s\n", model);
 #endif
 	if (!gd->flags & GD_FLG_RELOC)
 		printf("MPIDR: 0x%lx\n", (ulong)read_mpidr() & 0xfff);

@@ -12,4 +12,12 @@
 / {
 	model = "Rockchip RK3506 EVB Board";
 	compatible = "rockchip,rk3506-evb", "rockchip,rk3506";
+
+	aliases { serial0 = &uart0; };
+  	chosen  { stdout-path = "serial0:1500000n8"; };
+};
+
+&uart0 {
+  status = "okay";
+  u-boot,dm-pre-reloc;
 };
